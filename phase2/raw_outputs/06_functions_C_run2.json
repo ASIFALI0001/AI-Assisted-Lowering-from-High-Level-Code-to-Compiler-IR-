@@ -1,0 +1,20 @@
+{
+  "construct_id": "06",
+  "construct_name": "functions",
+  "prompt_variant": "C",
+  "run_number": 2,
+  "model": "gemini-2.5-flash",
+  "provider": "gemini",
+  "sdk_version": "google.genai (new)",
+  "timestamp": "2026-04-28T08:01:47.248165Z",
+  "source_file": "06_functions.src",
+  "prompt_sent": "Translate the following source program into LLVM IR.\n\nTarget IR rules you MUST follow:\n1. Every virtual register must be assigned exactly once (SSA form).\n2. Every basic block must end with exactly one terminator: ret, br, or conditional br.\n3. At control-flow merge points, use phi nodes.\n4. icmp returns i1. Arithmetic uses i32. Do not use i32 as a branch condition.\n5. For mutable variables use alloca/store/load or phi nodes.\n\nExample \u2014 source:\n  func abs_val(x: int) -> int {\n    int result = 0;\n    if (x < 0) { result = 0 - x; } else { result = x; }\n    return result;\n  }\n\nExample \u2014 correct LLVM IR:\n  define i32 @abs_val(i32 %x) {\n  entry:\n    %cond = icmp slt i32 %x, 0\n    br i1 %cond, label %then, label %else\n  then:\n    %neg = sub i32 0, %x\n    br label %merge\n  else:\n    br label %merge\n  merge:\n    %result = phi i32 [ %neg, %then ], [ %x, %else ]\n    ret i32 %result\n  }\n\nNow translate this program:\n\nSource:\n// Construct 6: Function Definition & Call\n// Tests: multi-function program, call instruction, return type matching\n\nfunc multiply(a: int, b: int) -> int {\n  return a * b;\n}\n\nfunc square(x: int) -> int {\n  return multiply(x, x);\n}\n\nfunc main() -> int {\n  int val = square(7);\n  return val;\n}\n\n\nProduce only the LLVM IR. No explanation.",
+  "raw_output": "```llvm\ndefine i32 @multiply(i32 %a, i32 %b) {\nentry:\n  %mul = mul i32 %a, %b\n  ret i32 %mul\n}\n\ndefine i32 @square(i32 %x) {\nentry:\n  %call = call i32 @multiply(i32 %x, i32 %x)\n  ret i32 %call\n}\n\ndefine i32 @main() {\nentry:\n  %val = call i32 @square(i32 7)\n  ret i32 %val\n}\n```",
+  "ir_extracted": "define i32 @multiply(i32 %a, i32 %b) {\nentry:\n  %mul = mul i32 %a, %b\n  ret i32 %mul\n}\n\ndefine i32 @square(i32 %x) {\nentry:\n  %call = call i32 @multiply(i32 %x, i32 %x)\n  ret i32 %call\n}\n\ndefine i32 @main() {\nentry:\n  %val = call i32 @square(i32 7)\n  ret i32 %val\n}",
+  "parse_ok": true,
+  "ssa_ok": false,
+  "cf_ok": false,
+  "all_ok": false,
+  "validator_output": "============================================================\n Validating: D:\\llm-compiler-lowering\\phase1\\ir_output\\06_functions_C_run2.ll\n============================================================\n\n[Stage 1] Syntax Check...\nTraceback (most recent call last):\n  File \"D:\\llm-compiler-lowering\\tools\\validate.py\", line 445, in <module>\n    ok = validate(sys.argv[1])\n         ^^^^^^^^^^^^^^^^^^^^^\n  File \"D:\\llm-compiler-lowering\\tools\\validate.py\", line 401, in validate\n    print(f\"  \\u2713 Stage 1 passed ({len(functions)} function(s) parsed)\")\n  File \"C:\\Users\\HP\\anaconda3\\Lib\\encodings\\cp1252.py\", line 19, in encode\n    return codecs.charmap_encode(input,self.errors,encoding_table)[0]\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nUnicodeEncodeError: 'charmap' codec can't encode character '\\u2713' in position 2: character maps to <undefined>",
+  "notes": ""
+}

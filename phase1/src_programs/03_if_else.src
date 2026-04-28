@@ -1,0 +1,12 @@
+// Construct 3: Conditional (if/else)
+// Tests: basic if/else branch, value used after merge (phi node required)
+
+func abs_val(x: int) -> int {
+  int result = 0;
+  if (x < 0) {
+    result = 0 - x;
+  } else {
+    result = x;
+  }
+  return result;
+}

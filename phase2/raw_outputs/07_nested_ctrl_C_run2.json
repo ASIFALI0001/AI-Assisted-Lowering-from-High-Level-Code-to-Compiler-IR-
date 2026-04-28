@@ -1,0 +1,20 @@
+{
+  "construct_id": "07",
+  "construct_name": "nested_ctrl",
+  "prompt_variant": "C",
+  "run_number": 2,
+  "model": "gemini-2.5-flash",
+  "provider": "gemini",
+  "sdk_version": "google.genai (new)",
+  "timestamp": "2026-04-28T08:03:23.111399Z",
+  "source_file": "07_nested_ctrl.src",
+  "prompt_sent": "Translate the following source program into LLVM IR.\n\nTarget IR rules you MUST follow:\n1. Every virtual register must be assigned exactly once (SSA form).\n2. Every basic block must end with exactly one terminator: ret, br, or conditional br.\n3. At control-flow merge points, use phi nodes.\n4. icmp returns i1. Arithmetic uses i32. Do not use i32 as a branch condition.\n5. For mutable variables use alloca/store/load or phi nodes.\n\nExample \u2014 source:\n  func abs_val(x: int) -> int {\n    int result = 0;\n    if (x < 0) { result = 0 - x; } else { result = x; }\n    return result;\n  }\n\nExample \u2014 correct LLVM IR:\n  define i32 @abs_val(i32 %x) {\n  entry:\n    %cond = icmp slt i32 %x, 0\n    br i1 %cond, label %then, label %else\n  then:\n    %neg = sub i32 0, %x\n    br label %merge\n  else:\n    br label %merge\n  merge:\n    %result = phi i32 [ %neg, %then ], [ %x, %else ]\n    ret i32 %result\n  }\n\nNow translate this program:\n\nSource:\n// Construct 7: Nested Conditionals in Loop\n// Tests: two-level phi nodes, inner conditional merge inside loop back-edge\n// This is the hardest case for LLMs \u2014 phi nodes at both loop.header and loop.latch\n\nfunc clamp_walk(n: int) -> int {\n  int i = 0;\n  int x = 10;\n  while (i < n) {\n    if (x > 0) {\n      x = x - 1;\n    } else {\n      x = x + 1;\n    }\n    i = i + 1;\n  }\n  return x;\n}\n\n\nProduce only the LLVM IR. No explanation.",
+  "raw_output": "```llvm\ndefine i32 @clamp_walk(i32 %n) {\nentry:\n  br label %loop.header\n\nloop.header:\n  %i.0 = phi i32 [ 0, %entry ], [ %i.next, %",
+  "ir_extracted": "```llvm\ndefine i32 @clamp_walk(i32 %n) {\nentry:\n  br label %loop.header\n\nloop.header:\n  %i.0 = phi i32 [ 0, %entry ], [ %i.next, %",
+  "parse_ok": false,
+  "ssa_ok": false,
+  "cf_ok": false,
+  "all_ok": false,
+  "validator_output": "============================================================\n Validating: D:\\llm-compiler-lowering\\phase1\\ir_output\\07_nested_ctrl_C_run2.ll\n============================================================\n\n[Stage 1] Syntax Check...\n  [STAGE 1 WARNING] Line 7: Could not parse instruction: '%i.0 = phi i32 [ 0, %entry ], [ %i.next, %'\n  [STAGE 1 ERROR] Line 0: Block '%loop.header' in @clamp_walk has no terminator instruction (expected ret or br).\nTraceback (most recent call last):\n  File \"D:\\llm-compiler-lowering\\tools\\validate.py\", line 445, in <module>\n    ok = validate(sys.argv[1])\n         ^^^^^^^^^^^^^^^^^^^^^\n  File \"D:\\llm-compiler-lowering\\tools\\validate.py\", line 398, in validate\n    print(\"\\n  \\u2717 Stage 1 FAILED \u2014 skipping deeper checks.\")\n  File \"C:\\Users\\HP\\anaconda3\\Lib\\encodings\\cp1252.py\", line 19, in encode\n    return codecs.charmap_encode(input,self.errors,encoding_table)[0]\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nUnicodeEncodeError: 'charmap' codec can't encode character '\\u2717' in position 4: character maps to <undefined>",
+  "notes": ""
+}

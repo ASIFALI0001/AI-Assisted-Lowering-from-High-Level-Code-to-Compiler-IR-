@@ -1,0 +1,20 @@
+{
+  "construct_id": "03",
+  "construct_name": "if_else",
+  "prompt_variant": "A",
+  "run_number": 3,
+  "model": "gemini-2.5-flash",
+  "provider": "gemini",
+  "sdk_version": "google.genai (new)",
+  "timestamp": "2026-04-28T07:56:32.578756Z",
+  "source_file": "03_if_else.src",
+  "prompt_sent": "Translate the following source program into LLVM IR.\n\nSource:\n// Construct 3: Conditional (if/else)\n// Tests: basic if/else branch, value used after merge (phi node required)\n\nfunc abs_val(x: int) -> int {\n  int result = 0;\n  if (x < 0) {\n    result = 0 - x;\n  } else {\n    result = x;\n  }\n  return result;\n}\n\n\nProduce only the LLVM IR. No explanation.",
+  "raw_output": "```llvm\n; ModuleID = \"abs_val.ll\"\nsource_filename = \"abs_val.ll\"\n\ndefine dso_local i32 @abs_val(i32 %x) {\nentry:\n  ; Allocate stack space for the '",
+  "ir_extracted": "```llvm\n; ModuleID = \"abs_val.ll\"\nsource_filename = \"abs_val.ll\"\n\ndefine dso_local i32 @abs_val(i32 %x) {\nentry:\n  ; Allocate stack space for the '",
+  "parse_ok": true,
+  "ssa_ok": false,
+  "cf_ok": false,
+  "all_ok": false,
+  "validator_output": "============================================================\n Validating: D:\\llm-compiler-lowering\\phase1\\ir_output\\03_if_else_A_run3.ll\n============================================================\n\n[Stage 1] Syntax Check...\nTraceback (most recent call last):\n  File \"D:\\llm-compiler-lowering\\tools\\validate.py\", line 445, in <module>\n    ok = validate(sys.argv[1])\n         ^^^^^^^^^^^^^^^^^^^^^\n  File \"D:\\llm-compiler-lowering\\tools\\validate.py\", line 401, in validate\n    print(f\"  \\u2713 Stage 1 passed ({len(functions)} function(s) parsed)\")\n  File \"C:\\Users\\HP\\anaconda3\\Lib\\encodings\\cp1252.py\", line 19, in encode\n    return codecs.charmap_encode(input,self.errors,encoding_table)[0]\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nUnicodeEncodeError: 'charmap' codec can't encode character '\\u2713' in position 2: character maps to <undefined>",
+  "notes": ""
+}

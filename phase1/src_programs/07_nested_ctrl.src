@@ -1,0 +1,17 @@
+// Construct 7: Nested Conditionals in Loop
+// Tests: two-level phi nodes, inner conditional merge inside loop back-edge
+// This is the hardest case for LLMs — phi nodes at both loop.header and loop.latch
+
+func clamp_walk(n: int) -> int {
+  int i = 0;
+  int x = 10;
+  while (i < n) {
+    if (x > 0) {
+      x = x - 1;
+    } else {
+      x = x + 1;
+    }
+    i = i + 1;
+  }
+  return x;
+}

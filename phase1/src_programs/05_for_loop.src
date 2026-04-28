@@ -1,0 +1,10 @@
+// Construct 5: For Loop
+// Tests: for-loop desugared to while, index variable in phi node
+
+func factorial(n: int) -> int {
+  int result = 1;
+  for (int i = 1; i <= n; i = i + 1) {
+    result = result * i;
+  }
+  return result;
+}

@@ -1,0 +1,11 @@
+// Construct 2: Arithmetic & Logical Expressions
+// Tests: mixed arithmetic, comparison operators, boolean logic
+
+func compute(a: int, b: int, c: int) -> bool {
+  int sum = a + b * c;
+  int diff = sum - a;
+  bool cmp1 = diff > 0;
+  bool cmp2 = a != b;
+  bool result = cmp1 && cmp2;
+  return result;
+}

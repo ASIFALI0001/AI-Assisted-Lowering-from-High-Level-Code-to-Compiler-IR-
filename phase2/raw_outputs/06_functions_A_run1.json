@@ -1,0 +1,20 @@
+{
+  "construct_id": "06",
+  "construct_name": "functions",
+  "prompt_variant": "A",
+  "run_number": 1,
+  "model": "gemini-2.5-flash",
+  "provider": "gemini",
+  "sdk_version": "google.genai (new)",
+  "timestamp": "2026-04-28T08:00:45.822998Z",
+  "source_file": "06_functions.src",
+  "prompt_sent": "Translate the following source program into LLVM IR.\n\nSource:\n// Construct 6: Function Definition & Call\n// Tests: multi-function program, call instruction, return type matching\n\nfunc multiply(a: int, b: int) -> int {\n  return a * b;\n}\n\nfunc square(x: int) -> int {\n  return multiply(x, x);\n}\n\nfunc main() -> int {\n  int val = square(7);\n  return val;\n}\n\n\nProduce only the LLVM IR. No explanation.",
+  "raw_output": "```llvm\n; ModuleID = \"source_program\"\nsource_filename = \"source_program\"\n\n; Function Definition: multiply\ndefine i32 @multiply(i32 %a, i32 %b) {\nentry:\n  %1 = mul i32 %a, %b\n  ret i32 %1\n}\n\n; Function Definition: square\ndefine i32 @square(i32 %x) {\nentry:\n  ; Call multiply(x, x)\n  %1 = call i32 @multiply(i32 %x, i32 %x)\n  ret i32 %1\n}\n\n; Function Definition: main\ndefine i32 @main() {\nentry:\n  ; int val = square",
+  "ir_extracted": "```llvm\n; ModuleID = \"source_program\"\nsource_filename = \"source_program\"\n\n; Function Definition: multiply\ndefine i32 @multiply(i32 %a, i32 %b) {\nentry:\n  %1 = mul i32 %a, %b\n  ret i32 %1\n}\n\n; Function Definition: square\ndefine i32 @square(i32 %x) {\nentry:\n  ; Call multiply(x, x)\n  %1 = call i32 @multiply(i32 %x, i32 %x)\n  ret i32 %1\n}\n\n; Function Definition: main\ndefine i32 @main() {\nentry:\n  ; int val = square",
+  "parse_ok": false,
+  "ssa_ok": false,
+  "cf_ok": false,
+  "all_ok": false,
+  "validator_output": "============================================================\n Validating: D:\\llm-compiler-lowering\\phase1\\ir_output\\06_functions_A_run1.ll\n============================================================\n\n[Stage 1] Syntax Check...\n  [STAGE 1 ERROR] Line 0: Block '%entry' in @main has no terminator instruction (expected ret or br).\nTraceback (most recent call last):\n  File \"D:\\llm-compiler-lowering\\tools\\validate.py\", line 445, in <module>\n    ok = validate(sys.argv[1])\n         ^^^^^^^^^^^^^^^^^^^^^\n  File \"D:\\llm-compiler-lowering\\tools\\validate.py\", line 398, in validate\n    print(\"\\n  \\u2717 Stage 1 FAILED \u2014 skipping deeper checks.\")\n  File \"C:\\Users\\HP\\anaconda3\\Lib\\encodings\\cp1252.py\", line 19, in encode\n    return codecs.charmap_encode(input,self.errors,encoding_table)[0]\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nUnicodeEncodeError: 'charmap' codec can't encode character '\\u2717' in position 4: character maps to <undefined>",
+  "notes": ""
+}

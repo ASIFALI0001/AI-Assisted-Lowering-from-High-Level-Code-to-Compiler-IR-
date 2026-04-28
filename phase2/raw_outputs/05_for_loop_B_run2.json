@@ -1,0 +1,20 @@
+{
+  "construct_id": "05",
+  "construct_name": "for_loop",
+  "prompt_variant": "B",
+  "run_number": 2,
+  "model": "gemini-2.5-flash",
+  "provider": "gemini",
+  "sdk_version": "google.genai (new)",
+  "timestamp": "2026-04-28T07:59:53.053142Z",
+  "source_file": "05_for_loop.src",
+  "prompt_sent": "Translate the following source program into LLVM IR.\n\nTarget IR rules you MUST follow:\n1. Every virtual register (e.g. %x) must be assigned exactly once (SSA form).\n2. Every basic block must end with exactly one terminator: ret, br, or conditional br.\n3. At any control-flow merge point (after if/else or at a loop header), use phi nodes\n   to reconcile values from different predecessor blocks.\n4. Comparison instructions (icmp) return i1. Arithmetic (add, sub, mul, sdiv) uses i32.\n5. Do NOT use i32 as a branch condition \u2014 only i1 is valid.\n6. For mutable variables, use alloca/store/load or phi nodes \u2014 never reassign a register.\n\nSource:\n// Construct 5: For Loop\n// Tests: for-loop desugared to while, index variable in phi node\n\nfunc factorial(n: int) -> int {\n  int result = 1;\n  for (int i = 1; i <= n; i = i + 1) {\n    result = result * i;\n  }\n  return result;\n}\n\n\nProduce only the LLVM IR. No explanation.",
+  "raw_output": "```llvm\ndefine i32 @factorial(i32 %n) {\nentry:\n  %result_init = i32 1\n  %i_init = i32 1\n  br label %loop_header\n\nloop_header:",
+  "ir_extracted": "```llvm\ndefine i32 @factorial(i32 %n) {\nentry:\n  %result_init = i32 1\n  %i_init = i32 1\n  br label %loop_header\n\nloop_header:",
+  "parse_ok": false,
+  "ssa_ok": false,
+  "cf_ok": false,
+  "all_ok": false,
+  "validator_output": "============================================================\n Validating: D:\\llm-compiler-lowering\\phase1\\ir_output\\05_for_loop_B_run2.ll\n============================================================\n\n[Stage 1] Syntax Check...\n  [STAGE 1 ERROR] Line 4: Unknown instruction opcode 'i32'. Check LLVM IR syntax.\n  [STAGE 1 ERROR] Line 5: Unknown instruction opcode 'i32'. Check LLVM IR syntax.\n  [STAGE 1 ERROR] Line 0: Block '%loop_header' in @factorial has no terminator instruction (expected ret or br).\nTraceback (most recent call last):\n  File \"D:\\llm-compiler-lowering\\tools\\validate.py\", line 445, in <module>\n    ok = validate(sys.argv[1])\n         ^^^^^^^^^^^^^^^^^^^^^\n  File \"D:\\llm-compiler-lowering\\tools\\validate.py\", line 398, in validate\n    print(\"\\n  \\u2717 Stage 1 FAILED \u2014 skipping deeper checks.\")\n  File \"C:\\Users\\HP\\anaconda3\\Lib\\encodings\\cp1252.py\", line 19, in encode\n    return codecs.charmap_encode(input,self.errors,encoding_table)[0]\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nUnicodeEncodeError: 'charmap' codec can't encode character '\\u2717' in position 4: character maps to <undefined>",
+  "notes": ""
+}

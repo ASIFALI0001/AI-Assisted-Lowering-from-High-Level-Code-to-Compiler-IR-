@@ -1,0 +1,15 @@
+// Construct 6: Function Definition & Call
+// Tests: multi-function program, call instruction, return type matching
+
+func multiply(a: int, b: int) -> int {
+  return a * b;
+}
+
+func square(x: int) -> int {
+  return multiply(x, x);
+}
+
+func main() -> int {
+  int val = square(7);
+  return val;
+}
