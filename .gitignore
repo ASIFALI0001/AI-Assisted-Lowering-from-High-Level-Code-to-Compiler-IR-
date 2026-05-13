@@ -1,0 +1,16 @@
+# API keys - NEVER commit these
+phase2/.env
+.env
+
+# Python
+venv/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# VS Code
+.vscode/
+
+# Test outputs (generated files, not source)
+test/output/*.ll
