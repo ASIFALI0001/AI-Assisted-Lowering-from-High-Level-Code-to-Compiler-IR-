@@ -14,3 +14,8 @@ __pycache__/
 
 # Test outputs (generated files, not source)
 test/output/*.ll
+
+# Next.js
+web/node_modules/
+web/.next/
+web/.env.local
