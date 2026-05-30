@@ -15,6 +15,9 @@ __pycache__/
 # Test outputs (generated files, not source)
 test/output/*.ll
 
+# Large local demo captures
+assets/*.mp4
+
 # Next.js
 web/node_modules/
 web/.next/
