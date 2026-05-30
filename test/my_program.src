@@ -1,6 +1,3 @@
-// ── ACTIVE PROGRAM (this is what gets sent to Gemini) ──────────────────────
-// You can have multiple functions here. Each one tests a different construct.
-
 // 1. Simple function (no control flow)
 func add(a: int, b: int) -> int {
   return a + b;
